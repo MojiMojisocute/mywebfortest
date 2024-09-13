@@ -1,39 +1,22 @@
 import React from 'react';
-import Nav from './Nav';
-import './App.css';
+import Header from './components/Header.tsx';
+import SearchBar from './components/SearchBar.tsx';
+import Banner from './components/Banner.tsx';
+import BookSection from './components/BookSection.tsx';
+import Cart from './components/Cart.tsx';
+import './styles.css';
 
-function App() {
+const App: React.FC = () => {
   return (
-    <div className="app-container">
-      <Nav />
-
-      <div className="banner">
-        <a href="#">
-          <img src="photo/ad1.jpg" alt="Advertisement" />
-        </a>
-      </div>
-
-      <div className="book-section">
-        <div className="section-title">
-          <h2>หนังสือขายดี</h2>
-          <a href="#">ดูทั้งหมด</a>
-        </div>
-        <div className="book-grid">
-          {/* Add book items here */}
-        </div>
-      </div>
-
-      <div className="book-section">
-        <div className="section-title">
-          <h2>หนังสือมาใหม่</h2>
-          <a href="#">ดูทั้งหมด</a>
-        </div>
-        <div className="book-grid">
-          {/* Add book items here */}
-        </div>
-      </div>
+    <div className="App">
+      <Header />
+      <SearchBar />
+      <Banner />
+      <BookSection title="หนังสือขายดี" />
+      <BookSection title="หนังสือมาใหม่" />
+      <Cart />
     </div>
   );
-}
+};
 
 export default App;
