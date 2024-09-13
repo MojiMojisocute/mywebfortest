@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Header: React.FC = () => {
   return (
@@ -7,10 +8,10 @@ const Header: React.FC = () => {
         <img src="photo/Hamburger_icon.png" alt="Hamburger icon" /> Ani Meb
       </div>
       <div className="logo-login">
-        <a href="#">
+        <Link to="/login">
           <img src="photo/userbar.png" alt="User icon" />
-        </a>
-        <a href="#">เข้าสู่ระบบ</a>
+        </Link>
+        <Link to="/login">เข้าสู่ระบบ</Link>
       </div>
     </header>
   );
