@@ -7,7 +7,8 @@ const Header: React.FC = () => {
   return (
     <header style={headerStyle}>
       <div style={logoStyle}>
-        <img src={hamburgerIcon} alt="Hamburger icon" style={imgStyle} /> Ani Meb
+        <img src={hamburgerIcon} alt="Hamburger icon" style={imgStyle} /> 
+        Ani Meb
       </div>
       <div style={logoLoginStyle}>
         <Link to="/login" style={linkStyle}>

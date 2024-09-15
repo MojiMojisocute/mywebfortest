@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 
 const Home = lazy(() => import('./pages/Home/Home'));
 const Login = lazy(() => import('./pages/login/Login'));
+const NewBook = lazy(() => import('./pages/Showbook/NewBook'));
 
 const App: React.FC = () => {
   return (
@@ -11,6 +12,7 @@ const App: React.FC = () => {
         <Routes>
           <Route index element={<Home />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/NewBook" element={<NewBook />} />
         </Routes>
       </Suspense>
     </div>

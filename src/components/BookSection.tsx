@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 interface BookSectionProps {
   title: string;
@@ -9,7 +10,7 @@ const BookSection: React.FC<BookSectionProps> = ({ title }) => {
     <div style={bookSectionStyle}>
       <div style={sectionTitleStyle}>
         <h2>{title}</h2>
-        <a href="Item/page.html" style={linkStyle}>ดูทั้งหมด &gt;</a>
+        <Link to="/NewBook" style={linkStyle}>ดูทั้งหมด &gt;</Link>
       </div>
       <div style={bookGridStyle}>
         {/* Add book items here */}
