@@ -1,5 +1,6 @@
 import { lazy, Suspense, useEffect } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
+import './global.css'
 
 const Home = lazy(() => import('./pages/Home/Home'));
 const Login = lazy(() => import('./pages/login/Login'));
@@ -9,9 +10,6 @@ const App: React.FC = () => {
   const location = useLocation();
 
   useEffect(() => {
-    // Reset scroll position when route changes
-    window.scrollTo(0, 0);
-    // Reset any global styles that might have been changed
     document.body.style.overflow = '';
     document.body.style.height = '';
   }, [location.pathname]);

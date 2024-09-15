@@ -1,4 +1,5 @@
 import React, { useState, CSSProperties } from 'react';
+import GoogleOauth from '../../assets/Google.png'
 
 interface FormData {
   email: string;
@@ -62,7 +63,6 @@ const Login: React.FC = () => {
       display: 'flex',
       justifyContent: 'center',
       flexDirection: 'column',
-      background: '#f6f5f7',
       fontFamily: 'Arial, sans-serif',
       minHeight: '100%',
       margin: '10%',
@@ -220,7 +220,7 @@ const Login: React.FC = () => {
             <h1 style={styles.h1}>สร้างบัญชีใหม่</h1>
             <div style={styles.socialContainer}>
               <a href="#" style={styles.socialLink}>
-                <img src="/api/placeholder/300/300" alt="google" style={styles.fab} />
+                <img src={GoogleOauth} alt="google" style={styles.fab} />
               </a>
             </div>
             <span>หรือสมัครสมาชิกด้วย Email</span>
@@ -259,7 +259,7 @@ const Login: React.FC = () => {
             <h1 style={styles.h1}>หรือเข้าสู่ระบบด้วย Email ของคุณ</h1>
             <div style={styles.socialContainer}>
               <a href="#" style={styles.socialLink}>
-                <img src="/api/placeholder/300/300" alt="google" style={styles.fab} />
+                <img src={GoogleOauth} alt="google" style={styles.fab} />
               </a>
             </div>
             <span>เข้าสู่ระบบด้วย Email ของคุณ</span>
