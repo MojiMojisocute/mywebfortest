@@ -1,20 +1,18 @@
-import React from 'react';
-import Header from './components/Header.tsx';
-import SearchBar from './components/SearchBar.tsx';
-import Banner from './components/Banner.tsx';
-import BookSection from './components/BookSection.tsx';
-import Cart from './components/Cart.tsx';
-import './styles.css';
+import { lazy, Suspense } from 'react';
+import { Route, Routes } from 'react-router-dom';
+
+const Home = lazy(() => import('./pages/Home/Home'));
+const Login = lazy(() => import('./pages/login/Login'));
 
 const App: React.FC = () => {
   return (
-    <div className="App">
-      <Header />
-      <SearchBar />
-      <Banner />
-      <BookSection title="หนังสือขายดี" />
-      <BookSection title="หนังสือมาใหม่" />
-      <Cart />
+    <div style={{ width: '100%', minHeight: '100vh', margin: 0, padding: 0 }}>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Routes>
+          <Route index element={<Home />} />
+          <Route path="/login" element={<Login />} />
+        </Routes>
+      </Suspense>
     </div>
   );
 };
