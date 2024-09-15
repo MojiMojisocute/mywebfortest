@@ -133,6 +133,8 @@ const Login: React.FC = () => {
     fab: {
       width: '300px',
       height: 'auto',
+      boxShadow: '0 14px 28px rgba(0, 0, 0, 0.07), 0 10px 10px rgba(0, 0, 0, 0.07)',
+      borderRadius: '15px'
     },
     button: {
       color: '#fff',
