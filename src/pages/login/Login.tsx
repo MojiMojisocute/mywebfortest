@@ -180,7 +180,6 @@ const Login: React.FC = () => {
       alignItems: 'center',
       justifyContent: 'center',
       flexDirection: 'column',
-      padding: '0 50px',
       textAlign: 'center',
       top: 0,
       height: '100%',

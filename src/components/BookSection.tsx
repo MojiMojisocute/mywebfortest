@@ -5,7 +5,7 @@ interface Book {
   id: number;
   title: string;
   coverImage: string;
-  price: string; // เปลี่ยนเป็น string เนื่องจาก price เป็น numeric ในฐานข้อมูล
+  price: string;
   description: string;
   stocksAvailable: number;
   sold: number;
@@ -39,7 +39,6 @@ const BookSection: React.FC<BookSectionProps> = ({ title, method }) => {
       setBooks(data.slice(0, 5));
     } catch (error) {
       console.error('Error fetching books:', error);
-      setError('ไม่สามารถโหลดข้อมูลหนังสือได้ กรุณาลองใหม่อีกครั้ง');
     } finally {
       setIsLoading(false);
     }
