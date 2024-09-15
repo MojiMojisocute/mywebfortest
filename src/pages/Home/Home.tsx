@@ -5,9 +5,16 @@ import SearchBar from '../../components/SearchBar';
 import Header from '../../components/Header';
 import Cart from '../../components/Cart';
 
+const homeContainerStyle: React.CSSProperties = {
+  width: '100%',
+  minHeight: '100vh',
+  display: 'flex',
+  flexDirection: 'column'
+};
+
 function Home() {
   return (
-    <div style={{ width: '100%', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>      
+    <div style={homeContainerStyle}>
       <Header />
       <SearchBar />
       <Banner />
