@@ -59,14 +59,12 @@ const Login: React.FC = () => {
             ...(isRightPanelActive && { name: formData.name })
           }),
         });
-  
+
         if (!response.ok) {
-          // หากการตอบกลับจากเซิร์ฟเวอร์ไม่ใช่สถานะ 200-299 (สำเร็จ)
           throw new Error(`Error: ${response.status}`);
         }
-  
-        const data = await response.json(); // ตรวจสอบว่า response เป็น JSON ที่ถูกต้อง
-  
+
+        const data = await response.json();
         if (isRightPanelActive) {
           console.log('Sign Up Success:', data);
         } else {
@@ -80,6 +78,15 @@ const Login: React.FC = () => {
         console.error('Error:', error);
       }
     }
+  };
+
+  const handleOAuthSuccess = (response: any) => {
+    console.log('Google OAuth Success:', response);
+    // ส่งโทเคนไปเซิร์ฟเวอร์เพื่อรับ JWT และข้อมูลผู้ใช้
+  };
+
+  const handleOAuthFailure = (error: any) => {
+    console.error('Google OAuth Failed:', error);
   };
 
   const styles: { [key: string]: CSSProperties } = {
@@ -138,7 +145,7 @@ const Login: React.FC = () => {
       fontWeight: 100,
       lineHeight: '20px',
       letterSpacing: '0.5px',
-      margin: '30px 0 5px',
+      margin: '30px 0 30px',
     },
     input: {
       background: '#eee',
@@ -149,18 +156,10 @@ const Login: React.FC = () => {
       border: 'none',
       outline: 'none',
     },
-    a: {
-      color: '#333',
-      fontSize: '14px',
-      textDecoration: 'none',
-      margin: '15px 0',
-    },
-    fab: {
-      width: '300px',
-      height: 'auto',
-      boxShadow: '0 14px 28px rgba(0, 0, 0, 0.07), 0 10px 10px rgba(0, 0, 0, 0.07)',
-      borderRadius: '30px',
-      overflow: 'hidden'
+    error: {
+      color: 'red',
+      fontSize: '12px',
+      marginTop: '5px',
     },
     button: {
       color: '#fff',
@@ -180,6 +179,12 @@ const Login: React.FC = () => {
     ghostButton: {
       background: 'transparent',
       border: '2px solid #fff',
+    },
+    fab: {
+      borderRadius: '40px',      
+      overflow: 'hidden',
+      padding: '0'
+
     },
     overlayContainer: {
       position: 'absolute',
@@ -222,31 +227,22 @@ const Login: React.FC = () => {
       right: 0,
       transform: isRightPanelActive ? 'translateX(20%)' : 'translateX(0)',
     },
-    socialContainer: {
-      margin: '20px 0',
-    },
-    socialLink: {
-      height: '40px',
-      width: '40px',
-      margin: '0 5px',
-      display: 'inline-flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-    error: {
-      color: 'red',
-      fontSize: '12px',
-      marginTop: '5px',
-    },
   };
 
   return (
-    <GoogleOAuthProvider clientId="YOUR_GOOGLE_CLIENT_ID">
+    <GoogleOAuthProvider clientId="GOOGLE_OAUTH_CLIENT_ID">
       <div style={styles.body}>
         <div style={styles.container}>
           <div style={styles.signUp}>
             <form style={styles.form} onSubmit={handleSubmit}>
               <h1 style={styles.h1}>สร้างบัญชีใหม่</h1>
+              <div style={styles.socialContainer}>
+                <GoogleLogin 
+                  onSuccess={(response) => console.log('Google Login Success:', response)}
+                  onError={() => console.log('Google Login Failed')}
+                  containerProps={{ style: styles.fab }}
+                />
+              </div>
               <input
                 style={styles.input}
                 type="text"
@@ -282,6 +278,13 @@ const Login: React.FC = () => {
           <div style={styles.signIn}>
             <form style={styles.form} onSubmit={handleSubmit}>
               <h1 style={styles.h1}>เข้าสู่ระบบ</h1>
+              <div style={styles.socialContainer}>
+                <GoogleLogin
+                  onSuccess={(response) => console.log('Google Login Success:', response)}
+                  onError={() => console.log('Google Login Failed')}
+                  containerProps={{ style: styles.fab }}
+                />
+              </div>
               <input
                 style={styles.input}
                 type="email"
