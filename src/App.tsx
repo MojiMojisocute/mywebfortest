@@ -2,6 +2,8 @@ import { lazy, Suspense, useEffect } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import './global.css'
 
+import Loader from './components/Loader';
+
 const Home = lazy(() => import('./pages/Home/Home'));
 const Login = lazy(() => import('./pages/login/Login'));
 const NewBook = lazy(() => import('./pages/Showbook/NewBook'));
@@ -16,7 +18,7 @@ const App: React.FC = () => {
 
   return (
     <div style={{ width: '100%', minHeight: '100vh', margin: 0, padding: 0 }}>
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<Loader/>}>
         <Routes>
           <Route index element={<Home />} />
           <Route path="/login" element={<Login />} />
