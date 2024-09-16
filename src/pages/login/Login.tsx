@@ -1,8 +1,5 @@
 import React, { useState, CSSProperties } from 'react';
-import GoogleOauth from '../../assets/Google.png'
-import jwt_decode from 'jwt-decode'; 
 import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
-
 
 interface FormData {
   email: string;
@@ -46,17 +43,42 @@ const Login: React.FC = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSignUp = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (validateForm()) {
-      console.log('Sign Up:', formData);
-    }
-  };
-
-  const handleSignIn = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (validateForm()) {
-      console.log('Sign In:', formData);
+      try {
+        const endpoint = isRightPanelActive ? '/signup' : '/signin';
+        const response = await fetch(endpoint, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            email: formData.email,
+            password: formData.password,
+            ...(isRightPanelActive && { name: formData.name })
+          }),
+        });
+  
+        if (!response.ok) {
+          // หากการตอบกลับจากเซิร์ฟเวอร์ไม่ใช่สถานะ 200-299 (สำเร็จ)
+          throw new Error(`Error: ${response.status}`);
+        }
+  
+        const data = await response.json(); // ตรวจสอบว่า response เป็น JSON ที่ถูกต้อง
+  
+        if (isRightPanelActive) {
+          console.log('Sign Up Success:', data);
+        } else {
+          if (data.success) {
+            console.log('Sign In Success:', data.user.name);
+          } else {
+            console.log('Sign In Failed:', data.message);
+          }
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      }
     }
   };
 
@@ -223,55 +245,17 @@ const Login: React.FC = () => {
       <div style={styles.body}>
         <div style={styles.container}>
           <div style={styles.signUp}>
-            <form style={styles.form} onSubmit={handleSignUp}>
+            <form style={styles.form} onSubmit={handleSubmit}>
               <h1 style={styles.h1}>สร้างบัญชีใหม่</h1>
-              <div style={styles.socialContainer}>
-                <GoogleLogin 
-                  onSuccess={(response) => console.log('Google Login Success:', response)}
-                  onError={() => console.log('Google Login Failed')}
-                  containerProps={{ style: styles.fab }}
-                />
-              </div>
               <input
-              style={styles.input}
-              type="text"
-              placeholder="Name"
-              name="name"
-              value={formData.name}
-              onChange={handleInputChange}
+                style={styles.input}
+                type="text"
+                placeholder="Name"
+                name="name"
+                value={formData.name}
+                onChange={handleInputChange}
               />
               {errors.name && <span style={styles.error}>{errors.name}</span>}
-              <input
-              style={styles.input}
-              type="email"
-              placeholder="Email"
-              name="email"
-              value={formData.email}
-              onChange={handleInputChange}
-              />
-              {errors.email && <span style={styles.error}>{errors.email}</span>}
-              <input
-              style={styles.input}
-              type="password"
-              placeholder="Password"
-              name="password"
-              value={formData.password}
-              onChange={handleInputChange}
-              />
-              {errors.password && <span style={styles.error}>{errors.password}</span>}
-              <button style={styles.button} type="submit">สมัครสมาชิก</button>
-            </form>
-          </div>
-          <div style={styles.signIn}>
-            <form style={styles.form} onSubmit={handleSignIn}>
-              <h1 style={styles.h1}>เข้าสู่ระบบ</h1>
-              <div style={styles.socialContainer}>
-                <GoogleLogin
-                  onSuccess={(response) => console.log('Google Login Success:', response)}
-                  onError={() => console.log('Google Login Failed')}
-                  containerProps={{ style: styles.fab }}
-                />
-              </div>
               <input
                 style={styles.input}
                 type="email"
@@ -290,21 +274,58 @@ const Login: React.FC = () => {
                 onChange={handleInputChange}
               />
               {errors.password && <span style={styles.error}>{errors.password}</span>}
-              <a href="#" style={styles.a}>ลืมรหัสผ่าน</a>
-              <button style={styles.button} type="submit">เข้าสู่ระบบ</button>
+              <button style={styles.button} type="submit">
+                สมัครสมาชิก
+              </button>
+            </form>
+          </div>
+          <div style={styles.signIn}>
+            <form style={styles.form} onSubmit={handleSubmit}>
+              <h1 style={styles.h1}>เข้าสู่ระบบ</h1>
+              <input
+                style={styles.input}
+                type="email"
+                placeholder="Email"
+                name="email"
+                value={formData.email}
+                onChange={handleInputChange}
+              />
+              {errors.email && <span style={styles.error}>{errors.email}</span>}
+              <input
+                style={styles.input}
+                type="password"
+                placeholder="Password"
+                name="password"
+                value={formData.password}
+                onChange={handleInputChange}
+              />
+              {errors.password && <span style={styles.error}>{errors.password}</span>}
+              <button style={styles.button} type="submit">
+                เข้าสู่ระบบ
+              </button>
             </form>
           </div>
           <div style={styles.overlayContainer}>
             <div style={styles.overlay}>
-              <div style={{...styles.overlayPanel, ...styles.overlayLeft}}>
+              <div style={{ ...styles.overlayPanel, ...styles.overlayLeft }}>
                 <h1 style={styles.h1}>ยินดีตอนรับกลับนะเพื่อน</h1>
                 <p>เข้าสู่ระบบเพื่อเชื่อมต่อกับเรา</p>
-                <button style={{...styles.button, ...styles.ghostButton}} onClick={() => setIsRightPanelActive(false)}>เข้าสู่ระบบ</button>
+                <button
+                  style={{ ...styles.button, ...styles.ghostButton }}
+                  onClick={() => setIsRightPanelActive(false)}
+                >
+                  เข้าสู่ระบบ
+                </button>
               </div>
-              <div style={{...styles.overlayPanel, ...styles.overlayRight}}>
+              <div style={{ ...styles.overlayPanel, ...styles.overlayRight }}>
                 <h1 style={styles.h1}>สวัสดีเพื่อน</h1>
                 <p>สมัครสมาชิกและเริ่มการเดินทางกับเรา</p>
-                <button style={{...styles.button, ...styles.ghostButton}} onClick={() => setIsRightPanelActive(true)}>สร้างบัญชีใหม่</button>
+                <button
+                  style={{ ...styles.button, ...styles.ghostButton }}
+                  onClick={() => setIsRightPanelActive(true)}
+                >
+                  สร้างบัญชีใหม่
+                </button>
               </div>
             </div>
           </div>
@@ -312,7 +333,6 @@ const Login: React.FC = () => {
       </div>
     </GoogleOAuthProvider>
   );
-  
 };
 
 export default Login;
