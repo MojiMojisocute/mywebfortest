@@ -7,6 +7,7 @@ import Loader from './components/Loader';
 const Home = lazy(() => import('./pages/Home/Home'));
 const Login = lazy(() => import('./pages/login/Login'));
 const NewBook = lazy(() => import('./pages/Showbook/NewBook'));
+const AllBook = lazy(() => import('./pages/Showbook/AllBook'));
 
 const App: React.FC = () => {
   const location = useLocation();
@@ -23,6 +24,7 @@ const App: React.FC = () => {
           <Route index element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/NewBook" element={<NewBook />} />
+          <Route path="/AllBook" element={<AllBook />} />
         </Routes>
       </Suspense>
     </div>
