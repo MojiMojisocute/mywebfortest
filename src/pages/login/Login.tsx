@@ -43,46 +43,31 @@ const Login: React.FC = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (validateForm()) {
-      try {
-        const endpoint = isRightPanelActive ? '/signup' : '/signin';
-        const response = await fetch(endpoint, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            email: formData.email,
-            password: formData.password,
-            ...(isRightPanelActive && { name: formData.name })
-          }),
-        });
-
-        if (!response.ok) {
-          throw new Error(`Error: ${response.status}`);
-        }
-
-        const data = await response.json();
-        if (isRightPanelActive) {
-          console.log('Sign Up Success:', data);
-        } else {
-          if (data.success) {
-            console.log('Sign In Success:', data.user.name);
-          } else {
-            console.log('Sign In Failed:', data.message);
-          }
-        }
-      } catch (error) {
-        console.error('Error:', error);
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+    
+    try {
+      const response = await fetch('/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: emailValue, password: passwordValue })
+      });
+  
+      if (!response.ok) {
+        // Handle error responses
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
+  
+      const data = await response.json();
+      console.log(data); // Handle the response data
+    } catch (error) {
+      console.error('Error:', error);
     }
   };
-
+  
+  
   const handleOAuthSuccess = (response: any) => {
-    console.log('Google OAuth Success:', response);
-    // ส่งโทเคนไปเซิร์ฟเวอร์เพื่อรับ JWT และข้อมูลผู้ใช้
+    console.log('Google OAuth Success:', response); 
   };
 
   const handleOAuthFailure = (error: any) => {
@@ -237,7 +222,7 @@ const Login: React.FC = () => {
             <form style={styles.form} onSubmit={handleSubmit}>
               <h1 style={styles.h1}>สร้างบัญชีใหม่</h1>
               <div style={styles.socialContainer}>
-                <GoogleLogin 
+                <GoogleLogin
                   onSuccess={(response) => console.log('Google Login Success:', response)}
                   onError={() => console.log('Google Login Failed')}
                   containerProps={{ style: styles.fab }}

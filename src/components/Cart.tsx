@@ -9,7 +9,10 @@ const Cart: React.FC = () => {
 
   return (
     <>
+      {/* Overlay */}
       <div
+        role="button"
+        aria-label="Close cart"
         style={{
           position: 'fixed',
           top: 0,
@@ -24,11 +27,13 @@ const Cart: React.FC = () => {
         }}
         onClick={toggleCart}
       ></div>
+      
+      {/* Cart Panel */}
       <div
         style={{
           position: 'fixed',
           top: 0,
-          right: isOpen ? 0 : '-100%',
+          right: isOpen ? 0 : '-300px', // Adjusted for exact width of the cart
           width: '300px',
           height: '100%',
           background: '#ffffff',
@@ -38,6 +43,21 @@ const Cart: React.FC = () => {
           boxShadow: '-2px 0 5px rgba(0, 0, 0, 0.5)',
         }}
       >
+        <button 
+          aria-label="Close cart"
+          onClick={toggleCart} 
+          style={{
+            position: 'absolute',
+            top: '10px',
+            right: '10px',
+            border: 'none',
+            background: 'none',
+            fontSize: '16px',
+            cursor: 'pointer',
+          }}
+        >
+          &times;
+        </button>
         <h2>Your Cart</h2>
         <p>Item 1</p>
         <p>Item 2</p>

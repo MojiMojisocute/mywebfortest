@@ -35,7 +35,9 @@ const BookSection: React.FC<BookSectionProps> = ({ title, method }) => {
       if (!response.ok) {
         throw new Error('Failed to fetch books');
       }
-      const data = await response.json();
+      const text = await response.text(); // Read response as text
+      console.log('Response text:', text); // Log the raw response
+      const data = JSON.parse(text); // Parse JSON
       setBooks(data.slice(0, 5));
     } catch (error) {
       console.error('Error fetching books:', error);
@@ -43,6 +45,8 @@ const BookSection: React.FC<BookSectionProps> = ({ title, method }) => {
       setIsLoading(false);
     }
   };
+  
+  
 
   if (isLoading) {
     return <div>กำลังโหลด...</div>;
