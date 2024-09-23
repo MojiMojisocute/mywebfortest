@@ -8,9 +8,12 @@ const Home = lazy(() => import('./pages/Home/Home'));
 const Login = lazy(() => import('./pages/login/Login'));
 const NewBook = lazy(() => import('./pages/Showbook/NewBook'));
 const AllBook = lazy(() => import('./pages/Showbook/AllBook'));
+const Payment = lazy(() => import('./pages/payment/Payment'));
+const Setting = lazy(() => import('./pages/Setting/Setting'));
+
 
 const App: React.FC = () => {
-  const location = useLocation();
+  const location = useLocation(); 
 
   useEffect(() => {
     document.body.style.overflow = '';
@@ -22,9 +25,11 @@ const App: React.FC = () => {
       <Suspense fallback={<Loader/>}>
         <Routes>
           <Route index element={<Home />} />
-          <Route path="/login" element={<Login />} />
+          <Route path="/Login" element={<Login />} />
           <Route path="/NewBook" element={<NewBook />} />
           <Route path="/AllBook" element={<AllBook />} />
+          <Route path="/Payment" element={<Payment/>} />
+          <Route path="/Setting" element={<Setting/>} />
         </Routes>
       </Suspense>
     </div>

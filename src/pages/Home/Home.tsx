@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import BookSection from '../../components/BookSection';
 import Banner from '../../components/Banner';
 import SearchBar from '../../components/SearchBar';
@@ -13,14 +13,23 @@ const homeContainerStyle: React.CSSProperties = {
 };
 
 function Home() {
+  const [isCartOpen, setIsCartOpen] = useState(false);
+  const [cartItems, setCartItems] = useState([
+    //need backend
+  ]);
+
+  const toggleCart = () => {
+    setIsCartOpen(!isCartOpen);
+  };
+
   return (
     <div style={homeContainerStyle}>
       <Header />
-      <SearchBar />
+      <SearchBar onCartClick={toggleCart} />
       <Banner />
       <BookSection title="หนังสือขายดี" />
       <BookSection title="หนังสือมาใหม่" />
-      <Cart />
+      <Cart isOpen={isCartOpen} toggleCart={toggleCart} items={cartItems} />
     </div>
   );
 }

@@ -1,18 +1,22 @@
 import React from 'react';
-import bellIcon from '../assets/iconbellbarshop.png';
-import likeBookIcon from '../assets/likebook.png';
-import lineVectorIcon from '../assets/linevector.png';
-import cartIcon from '../assets/carshopping.png';
+import {ShoppingCart, Bell, Heart, Tally1} from 'lucide-react'
 
-const SearchBar: React.FC = () => {
+interface SearchBarProps{
+  onCartClick: () => void;
+}
+
+const SearchBar: React.FC<SearchBarProps> = ({onCartClick}) => {
   return (
     <div style={searchBarStyle}>
       <input type="text" placeholder="Search..." style={inputStyle} />
       <div style={iconShoppingStyle}>
-        <img src={bellIcon} alt="Bell icon" style={imgStyle} />
-        <img src={likeBookIcon} alt="Like book" style={imgStyle} />
-        <img src={lineVectorIcon} alt="Line vector" style={imgStyle} />
-        <img src={cartIcon} alt="Shopping cart" className="cart-icon" style={cartIconStyle} />
+        <Bell style={iconStyle} />
+        <Heart style={iconStyle} />
+        <Tally1 style={iconStyle}/>
+        <ShoppingCart
+          style={{...iconStyle}}
+          onClick={onCartClick}
+        />
       </div>
     </div>
   );
@@ -27,9 +31,10 @@ const searchBarStyle: React.CSSProperties = {
   gap: '450px',
 };
 
-const imgStyle: React.CSSProperties = {
+const iconStyle: React.CSSProperties = {
   width: '30px',
   height: 'auto',
+  color: 'rgb(44, 82, 52'
 };
 
 const inputStyle: React.CSSProperties = {

@@ -1,8 +1,7 @@
 // Header.tsx
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import hamburgerIcon from '../assets/Hamburger_icon.png';
-import userbarIcon from '../assets/UserBar.png';
+import {Menu, UserRound} from 'lucide-react'
 
 const Header: React.FC = () => {
   const [username, setUsername] = useState<string | null>(null);
@@ -23,7 +22,7 @@ const Header: React.FC = () => {
   return (
     <header style={headerStyle}>
       <div style={logoStyle}>
-        <img src={hamburgerIcon} alt="Hamburger icon" style={imgStyle} /> 
+        <Menu style={iconStyle} /> 
         Ani Meb
       </div>
       <div style={logoLoginStyle}>
@@ -37,7 +36,7 @@ const Header: React.FC = () => {
         ) : (
           <>
             <Link to="/login" style={linkStyle}>
-              <img src={userbarIcon} alt="User icon" style={imgStyle} />
+              <UserRound style={iconStyle} />
             </Link>
             <Link to="/login" style={linkStyle}>เข้าสู่ระบบ</Link>
           </>
@@ -73,11 +72,13 @@ const logoLoginStyle: React.CSSProperties = {
 const linkStyle: React.CSSProperties = {
   textDecoration: 'none',
   color: '#2c5234',
+  fontSize: '20px',
 };
 
-const imgStyle: React.CSSProperties = {
+const iconStyle: React.CSSProperties = {
   width: '30px',
   height: 'auto',
+  color: '#2c5234',
 };
 
 const welcomeStyle: React.CSSProperties = {
