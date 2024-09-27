@@ -6,6 +6,8 @@ interface SearchBarProps{
 }
 
 const SearchBar: React.FC<SearchBarProps> = ({onCartClick}) => {
+  
+  
   return (
     <div style={searchBarStyle}>
       <input type="text" placeholder="Search..." style={inputStyle} />
